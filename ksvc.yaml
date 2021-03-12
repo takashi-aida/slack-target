@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+ name: slack-target
+ namespace: t-aida
+spec:
+ template:
+  spec:
+   containers:
+    - image: docker.io/ailispaw/slack-target
+      env:
+        - name: SLACK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: token
+              name: "The name of a slackTarget secret for your Slack Bot User OAuth Token"
+        - name: SLACK_CHANNEL
+          value: "The channel for the bot to post"
