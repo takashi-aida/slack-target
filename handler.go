@@ -95,8 +95,10 @@ func processEvent(e cloudevents.Event) (interface{} /*result*/, error) {
 
 	b, err := e.MarshalJSON()
 	if err != nil {
+		log.Printf("Error MarshalJSON CloudEvent: %s", err)
 		return nil, err
 	}
+	log.Print(string(b))
 
 	api := slack.New(os.Getenv("SLACK_TOKEN"))
 	channelID, timestamp, err := api.PostMessage(
@@ -104,8 +106,10 @@ func processEvent(e cloudevents.Event) (interface{} /*result*/, error) {
 		slack.MsgOptionText(string(b), false),
 	)
 	if err != nil {
+		log.Printf("Error Slack PostMessage: %s", err)
 		return nil, err
 	}
+	log.Printf("Message successfully sent to channel %s at %s", channelID, timestamp)
 
 	res := &dummyResult{
 		Message:        fmt.Sprintf("Message successfully sent to channel %s at %s", channelID, timestamp),
