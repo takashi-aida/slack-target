@@ -19,7 +19,7 @@ push: build
 deploy:
 	kubectl --kubeconfig=$(KUBECONFIG) -n $(NAMESPACE) apply -f ksvc.yaml
 
-clean: 
+clean:
 	-docker rm -f $(NAME)
 	-docker rmi $(TAG)
 
