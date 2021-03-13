@@ -93,12 +93,16 @@ func (h *Handler) receive(e cloudevents.Event) (*cloudevents.Event, cloudevents.
 func processEvent(e cloudevents.Event) (interface{} /*result*/, error) {
 	tBegin := time.Now()
 
+	b, err := e.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+
 	api := slack.New(os.Getenv("SLACK_TOKEN"))
 	channelID, timestamp, err := api.PostMessage(
 		os.Getenv("SLACK_CHANNEL"),
-		slack.MsgOptionText("test with my slack-target", false),
+		slack.MsgOptionText(string(b), false),
 	)
-
 	if err != nil {
 		return nil, err
 	}
