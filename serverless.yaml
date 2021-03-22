@@ -1,0 +1,14 @@
+service: slack-target
+description: Another Slack Target for TriggerMesh
+
+provider:
+  name: triggermesh
+
+functions:
+  slack-target:
+    source: docker.io/ailispaw/slack-target
+    description: Another Slack Target for TriggerMesh
+    environment:
+      SLACK_CHANNEL: triggermesh-target
+    env-secrets:
+      - slack-token

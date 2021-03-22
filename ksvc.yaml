@@ -2,7 +2,6 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
  name: slack-target
- namespace: t-aida
 spec:
  template:
   spec:
@@ -12,7 +11,7 @@ spec:
         - name: SLACK_TOKEN
           valueFrom:
             secretKeyRef:
-              key: token
-              name: "The name of a slackTarget secret for your Slack Bot User OAuth Token"
+              name: slack-token
+              key: SLACK_TOKEN
         - name: SLACK_CHANNEL
-          value: "The channel for the bot to post"
+          value: triggermesh-target
